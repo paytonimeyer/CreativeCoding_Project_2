@@ -6,13 +6,15 @@ var surpriseMicrons = [];
 function Micron(tempW, tempShade) {
   this.w = tempW;
   this.shade = tempShade;
+  //will create each vector at a random location on the canvas
   this.position = createVector(random(width),random(height));
   this.velocity = createVector();
   this.acceleration = createVector();
+  //speed cannot exceed 1
   this.topspeed = 1;
 
   this.update = function() {
-    // Compute a vector that points from position to mouse
+
     var mouse = createVector(mouseX,mouseY);
     this.acceleration = p5.Vector.sub(mouse,this.position);
     // Set magnitude of acceleration
@@ -30,7 +32,7 @@ function Micron(tempW, tempShade) {
   };
 }
 
-
+//initalize microns on the canvas. This will go in setup
 function makeMicrons(){
   for (var i = 0; i < 10; i++) {
      microns[i] = new Micron(1, 127); 
@@ -38,34 +40,23 @@ function makeMicrons(){
 }
 
 
-
+//move microns each frame. This function will go in draw
 function moveMicrons(){
+var s = second();
+
+if (s === 30){
+  for (var i = 0; i < 10; i++) {
+     microns[i] = new Micron(1, 127); 
+  }
+}
+
   for (var i = 0; i < microns.length; i++) {
     microns[i].update();
     microns[i].display(); 
   }
-}
 
-function makeSurpriseMicrons(){
-
-  var s = second();
-
-  //create travelers when seconds are between 10 and 25
-  if(s === 46.1){
-    //for (var i = 0; i < 5; i++) {
-      surpriseMicrons.push(new Micron(5, 15));
-    //}
-  }
-  print(s);
+print(s);
 }
 
 
-function moveSurpriseMicrons(){
-
-  for (var i = 0; i < surpriseMicrons.length; i++) {
-    surpriseMicrons[i].update();
-    surpriseMicrons[i].display(); 
-  }
-
-}
 
